@@ -8,8 +8,6 @@ Start ZooKeeper:
 
 ```
 bin/zkServer.sh start
- OR
-bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
 
 Stop ZooKeeper:
