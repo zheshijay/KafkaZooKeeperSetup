@@ -48,7 +48,8 @@ Comsumer:
 bin/kafka-console-consumer.sh --zookeeper localhost:2181 —topic jay-kafkatest --from-beginning
 ```
 ---------------------- 
-Single Node-Multiple Brokers Configuration
+
+## Single Node-Multiple Brokers Configuration
 
 ```
 Step01: Create/Copy N server.properties files.
@@ -62,6 +63,31 @@ For example, in server-1.properties used for broker1, we define the following:
 brokerid=1
 port=9092
 log.dir=/var/log/kafka01-logs/broker1
+
+Start all brokers:
+Broker1
+bin/kafka-server-start.sh config/server.properties
+Broker2
+bin/kafka-server-start.sh config/server-01.properties
+Broker3
+bin/kafka-server-start.sh config/server-02.properties
+
 ```
+
+### Multiple Broker Testing
+
+```
+Create Topic: replication-factor is 3, because we have 3 brokers now.
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 -partitions 1 --topic jay-multiple-brokers-topic
+
+Create Producer ( use all 3 brokers ):
+bin/kafka-console-producer.sh --broker-list localhost:9092,localhost:9093,localhost:9094 --topic jay-multiple-brokers-topic
+
+Create Consumer:
+bin/kafka-console-consumer.sh --zookeeper localhost:2181 --from-beginning —topic jay-multiple-brokers-topic
+bin/kafka-console-consumer.sh --zookeeper localhost:2181 —topic jay-multiple-brokers-topic --from-beginning
+```
+
+
 
 
