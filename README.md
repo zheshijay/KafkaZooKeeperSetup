@@ -84,8 +84,7 @@ Create Producer ( use all 3 brokers ):
 bin/kafka-console-producer.sh --broker-list localhost:9092,localhost:9093,localhost:9094 --topic jay-multiple-brokers-topic
 
 Create Consumer:
-bin/kafka-console-consumer.sh --zookeeper localhost:2181 --from-beginning —topic jay-multiple-brokers-topic
-bin/kafka-console-consumer.sh --zookeeper localhost:2181 —topic jay-multiple-brokers-topic --from-beginning
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic jay-multiple-brokers-topic
 ```
 
 
