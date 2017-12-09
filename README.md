@@ -16,14 +16,20 @@ bin/zkServer.sh stop
 ```
 
 ### 1.2 Kafka
-Start Kafka:
+Start Kafka/Brokers:
 ```
+ Single Broker:
  bin/kafka-server-start.sh config/server.properties
+ 
+ 
+ Multiple Brokers:
+nohup sudo bin/kafka-server-start.sh config/server-01.properties  </dev/null >/dev/null 2>&1 &
+nohup sudo bin/kafka-server-start.sh config/server-02.properties  </dev/null >/dev/null 2>&1 &
+nohup sudo bin/kafka-server-start.sh config/server-03.properties  </dev/null >/dev/null 2>&1 &
+nohup sudo bin/kafka-server-start.sh config/server-04.properties  </dev/null >/dev/null 2>&1 &
+nohup sudo bin/kafka-server-start.sh config/server-05.properties  </dev/null >/dev/null 2>&1 &
 ```
-Start Kafka Broker
-```
-bin/kafka-server-start.sh config/server.properties
-```
+
 Stop Kafka
 ```
 bin/kafka-server-stop.sh config/server.properties
@@ -41,7 +47,7 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 
 Producer:
 ```
-bin/kafka-console-producer.sh --broker-list localhost:9092 --topic Hello-Kafka
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic jay-kafkatest
 ```
 Comsumer:
 ```
@@ -53,6 +59,16 @@ bin/kafka-console-consumer.sh --zookeeper localhost:2181 —topic jay-kafkatest 
 
 ```
 Step01: Create/Copy N server.properties files.
+
+
+```
+Broker01  9092
+Broker02  9093
+Broker03  9094
+Broker04  9095
+Broker05  9096
+
+```
 
 jay@kafka-dev-01:/usr/local/kafka/kafka_2.11-0.11.0.2/config$ ls -ltr
 -rw-r--r-- 1 root root 1023 Nov 10 23:47 zookeeper.properties
@@ -97,10 +113,10 @@ bin/kafka-server-start.sh config/server-03.properties
 
 ```
 Create Topic: replication-factor is 3, because we have 3 brokers now.
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 -partitions 1 --topic jay-multiple-brokers-topic
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 5 -partitions 1 --topic jay-multiple-brokers-topic
 
 Create Producer ( use all 3 brokers ):
-bin/kafka-console-producer.sh --broker-list localhost:9092,localhost:9093,localhost:9094 --topic jay-multiple-brokers-topic
+bin/kafka-console-producer.sh --broker-list localhost:9092,localhost:9093,localhost:9094,localhost:9095,localhost:9096 --topic jay-multiple-brokers-topic
 
 Create Consumer:
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic jay-multiple-brokers-topic
@@ -113,6 +129,15 @@ Use RollingFileAppender:
 log4j.appender.kafkaAppender=org.apache.log4j.RollingFileAppender
 log4j.appender.kafkaAppender.MaxFileSize=500MB
 log4j.appender.kafkaAppender.MaxBackupIndex=5
+
+
+Find all running brokers:
+```
+jay@kafka-dev-01:/usr/local/kafka/zookeeper-3.4.10$ ./bin/zkCli.sh -server localhost:2181 ls /brokers/ids | tail -1
+[1, 2, 3, 4, 5]
+```
+
+
 
 
 
