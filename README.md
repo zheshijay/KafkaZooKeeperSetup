@@ -54,23 +54,42 @@ bin/kafka-console-consumer.sh --zookeeper localhost:2181 —topic jay-kafkatest 
 ```
 Step01: Create/Copy N server.properties files.
 
+jay@kafka-dev-01:/usr/local/kafka/kafka_2.11-0.11.0.2/config$ ls -ltr
+-rw-r--r-- 1 root root 1023 Nov 10 23:47 zookeeper.properties
+-rw-r--r-- 1 root root 1032 Nov 10 23:47 tools-log4j.properties
+-rw-r--r-- 1 root root 1900 Nov 10 23:47 producer.properties
+-rw-r--r-- 1 root root 4696 Nov 10 23:47 log4j.properties
+-rw-r--r-- 1 root root 1199 Nov 10 23:47 consumer.properties
+-rw-r--r-- 1 root root 2730 Nov 10 23:47 connect-standalone.properties
+-rw-r--r-- 1 root root 1111 Nov 10 23:47 connect-log4j.properties
+-rw-r--r-- 1 root root  881 Nov 10 23:47 connect-file-source.properties
+-rw-r--r-- 1 root root  883 Nov 10 23:47 connect-file-sink.properties
+-rw-r--r-- 1 root root 5807 Nov 10 23:47 connect-distributed.properties
+-rw-r--r-- 1 root root  909 Nov 10 23:47 connect-console-source.properties
+-rw-r--r-- 1 root root  906 Nov 10 23:47 connect-console-sink.properties
+-rw-r--r-- 1 root root 7014 Dec  9 00:46 server-01.properties
+-rw-r--r-- 1 root root 7014 Dec  9 00:46 server-02.properties
+-rw-r--r-- 1 root root 7014 Dec  9 00:47 server-03.properties
+-rw-r--r-- 1 root root 6963 Dec  9 00:47 server-04.properties
+-rw-r--r-- 1 root root 7013 Dec  9 00:48 server-05.properties
+
 Step02: Mainly change 3 values for each Kafka broker:
-  brokerId
-  port
-  log.dir
+  broker.id=0
+  port=9092
+  log.dirs=/var/log/kafka/kafka-01
 
 For example, in server-1.properties used for broker1, we define the following:
-brokerid=1
-port=9092
-log.dir=/var/log/kafka01-logs/broker1
+broker.id=1
+port=9093
+log.dirs=/var/log/kafka/kafka-05
 
 Start all brokers:
 Broker1
-bin/kafka-server-start.sh config/server.properties
-Broker2
 bin/kafka-server-start.sh config/server-01.properties
-Broker3
+Broker2
 bin/kafka-server-start.sh config/server-02.properties
+Broker3
+bin/kafka-server-start.sh config/server-03.properties
 
 ```
 
