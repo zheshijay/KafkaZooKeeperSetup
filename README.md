@@ -106,6 +106,16 @@ Create Consumer:
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic jay-multiple-brokers-topic
 ```
 
+
+### Server Tuning
+
+Use RollingFileAppender:
+log4j.appender.kafkaAppender=org.apache.log4j.RollingFileAppender
+log4j.appender.kafkaAppender.MaxFileSize=500MB
+log4j.appender.kafkaAppender.MaxBackupIndex=5
+
+
+
 ###
 ```
 package kafka.demo;
