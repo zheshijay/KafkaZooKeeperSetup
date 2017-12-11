@@ -40,18 +40,18 @@ bin/kafka-server-stop.sh config/server.properties
 
 Create Topic:
 ```
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic jay-kafkatest
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic kafkatest
 ```
 
 ## 3. Send & Receive Messages
 
 Producer:
 ```
-bin/kafka-console-producer.sh --broker-list localhost:9092 --topic jay-kafkatest
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic kafkatest
 ```
 Comsumer:
 ```
-bin/kafka-console-consumer.sh --zookeeper localhost:2181 —topic jay-kafkatest --from-beginning
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic kafkatest
 ```
 ---------------------- 
 
